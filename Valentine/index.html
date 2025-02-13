@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Моя Валентинка</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    .bg-hearts {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-heart {
+      position: absolute;
+      bottom: -50px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      color: #ffffff;
+      animation: floatHeart 10s linear infinite;
+    }
+    @keyframes floatHeart {
+      0% {
+        bottom: -50px;
+        opacity: 0;
+        transform: translateY(0) scale(0.5);
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        bottom: 110%;
+        opacity: 0;
+        transform: scale(1);
+      }
+    }
+    .bg-hearts .bg-heart:nth-child(1) { left: 10%; animation-delay: 0s; font-size: 30px; }
+    .bg-hearts .bg-heart:nth-child(2) { left: 30%; animation-delay: 1s; font-size: 45px; }
+    .bg-hearts .bg-heart:nth-child(3) { left: 50%; animation-delay: 2s; font-size: 38px; }
+    .bg-hearts .bg-heart:nth-child(4) { left: 70%; animation-delay: 3s; font-size: 33px; }
+    .bg-hearts .bg-heart:nth-child(5) { left: 90%; animation-delay: 4s; font-size: 42px; }
+    .bg-hearts .bg-heart:nth-child(6) { left: 15%; animation-delay: 5s; font-size: 36px; }
+    .bg-hearts .bg-heart:nth-child(7) { left: 40%; animation-delay: 6s; font-size: 39px; }
+    .bg-hearts .bg-heart:nth-child(8) { left: 65%; animation-delay: 7s; font-size: 30px; }
+    .bg-hearts .bg-heart:nth-child(9) { left: 80%; animation-delay: 8s; font-size: 45px; }
+    .bg-hearts .bg-heart:nth-child(10) { left: 50%; animation-delay: 9s; font-size: 33px; }
+    body {
+      margin: 0; padding: 0;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh;
+      font-family: 'Roboto', sans-serif;
+      position: relative;
+      z-index: 1;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      max-width: 1000px; width: 90%;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .heart {
+      position: relative;
+      width: 100px; height: 90px;
+      margin: 0 auto 20px;
+      animation: beat 2s infinite;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 50px; height: 80px;
+      background: #ff4b5c;
+      border-radius: 50px 50px 0 0;
+    }
+    .heart::before {
+      left: 50px;
+      transform: rotate(-45deg);
+      transform-origin: 0 100%;
+    }
+    .heart::after {
+      left: 0;
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
+    }
+    @keyframes beat {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    h1 {
+      font-size: 2.5em;
+      margin: 10px 0;
+      color: #ff4b5c;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+    p {
+      font-size: 1.2em;
+      color: #333;
+    }
+    button {
+      background: #ff4b5c; color: #fff;
+      border: none; border-radius: 25px;
+      padding: 10px 20px; font-size: 1em;
+      cursor: pointer; margin-top: 20px;
+      transition: background 0.3s;
+    }
+    button:hover { background: #e04350; }
+    .cards-container {
+      margin-top: 20px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+    .cards-container.visible {
+      display: flex;
+      animation: fadeIn 1s forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .card {
+      position: relative;
+      width: 100%; max-width: 700px;
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .card-text {
+      padding: 15px;
+      font-size: 1.2em;
+      color: #333;
+      text-align: left;
+      line-height: 1.6;
+    }
+    .card-text p { margin: 0 0 10px; }
+    .image-container {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      margin-bottom: 15px;
+      padding-top: 100px;
+      box-sizing: border-box;
+    }
+    .image-container img {
+      position: absolute;
+      bottom: 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      filter: brightness(0.7);
+      border-radius: 15px;
+    }
+    .center-img {
+      width: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      filter: brightness(1);
+    }
+    .left-65, .right-65 {
+      width: 40%;
+      z-index: 3;
+    }
+    .left-15, .right-15 {
+      width: 35%;
+      z-index: 2;
+    }
+    .left-15 {
+      left: 20%;
+      transform: rotate(-15deg);
+    }
+    .right-15 {
+      right: 20%;
+      transform: rotate(15deg);
+    }
+    .left-65 {
+      left: 5%;
+      transform: rotate(-65deg);
+    }
+    .right-65 {
+      right: 5%;
+      transform: rotate(65deg);
+    }
+    .image-container.side-hover .center-img {
+      filter: brightness(0.5);
+    }
+    .image-container img:hover {
+      filter: brightness(1);
+      z-index: 10;
+    }
+    .emoji-bouquet,
+    .emoji-paw {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 2.5rem;
+      pointer-events: none;
+      user-select: none;
+    }
+    /* Дополнительный стиль, чтобы в ПЕРВОЙ валентинке боковые фотки были выше */
+    .cards-container > .card:first-child .left-65,
+    .cards-container > .card:first-child .right-65 {
+      bottom: 60px; /* Можно отрегулировать значение по вкусу */
+    }
+    @media (max-width: 768px) {
+      .container { padding: 20px; }
+      h1 { font-size: 2em; }
+      p, .card .card-text { font-size: 1em; }
+      .image-container { height: 350px; padding-top: 70px; }
+      .cards-container > .card:first-child .left-65,
+      .cards-container > .card:first-child .right-65 {
+        bottom: 40px;
+      }
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 1.8em; }
+      button { padding: 8px 16px; font-size: 0.9em; }
+      .image-container { height: 250px; padding-top: 50px; }
+      .cards-container > .card:first-child .left-65,
+      .cards-container > .card:first-child .right-65 {
+        bottom: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-hearts">
+    <span class="bg-heart">&#10084;</span>
+    <span class="bg-heart">&#10084;</span>
+    <span class="bg-heart">&#10084;</span>
+    <span class="bg-heart">&#10084;</span>
+    <span class="bg-heart">&#10084;</span>
+    <span class="bg-heart">&#10084;</span>
+    <span class="bg-heart">&#10084;</span>
+    <span class="bg-heart">&#10084;</span>
+    <span class="bg-heart">&#10084;</span>
+    <span class="bg-heart">&#10084;</span>
+  </div>
+  <div class="container">
+    <div class="heart"></div>
+    <h1>С 14 февраля!</h1>
+    <p>Тут сразу две валентинки, от меня и от Джиммика!</p>
+    <button id="btn">Посмотреть валентинки</button>
+    <div id="secretMessage" class="cards-container">
+      <div class="card">
+        <div class="image-container">
+          <img src="photo_2025-02-13_22-42-46.jpg" alt="Жёлтое слева 65°" class="side-img left-65">
+          <img src="photo_2025-02-13_22-44-40.jpg" alt="Жёлтое справа 65°" class="side-img right-65">
+          <img src="photo_2025-02-13_22-43-08.jpg" alt="Красное центральное" class="center-img">
+          <div class="emoji-bouquet">💐</div>
+        </div>
+        <div class="card-text">
+          <p>Поздравляю с 14 февраля!</p>
+          <p>Постарался сделать такой мини-сайтик в виде валентинки и надеюсь, что тебе понравилось.</p>
+          <p>Не знал какие фотки добавить поэтому добавил вот с нашей встречи.</p>
+          <p>Хоть ты будешь говорить, зачем так ты сделал, время потратил, но я хотел сделать тебе приятно мне было несложно это сделать.</p>
+          <p>Так что надеюсь, что ты просто хотя бы уже с улыбкой на лице будешь и с хорошим настроением.</p>
+          <p>Люблю тебя! Может ты и скажешь что у тебя чувств ко мне нету но я просто хотел свои чувства выразить так. Сделать что-то своими руками хотя и далеко очень.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="image-container">
+          <img src="photo_2025-02-13_22-45-26.jpg" alt="Жёлтое слева 65°" class="side-img left-65">
+          <img src="photo_2025-02-09_22-02-03.jpg" alt="Жёлтое справа 65°" class="side-img right-65">
+          <img src="photo_2025-02-13_22-46-01.jpg" alt="Красное центральное" class="center-img">
+          <div class="emoji-paw">🐾</div>
+        </div>
+        <div class="card-text">
+          <p>Джиммик тебя тоже поздравляет с 14 февраля!</p>
+          <p>У него лапки, поэтому, к сожалению, сам написать не может, но он нагавкал мне на ушко, чтобы я помог сделать валентинку для тебя.</p>
+          <p>Он хотел передать, что очень любит тебя и ценит, и что он очень рад, что именно ты стала его хозяйкой.</p>
+          <p>Он очень благодарен за то, как ты за ним заботишься.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('btn').addEventListener('click', () => {
+      const secret = document.getElementById('secretMessage');
+      secret.classList.toggle('visible');
+    });
+    const container = document.querySelector('.container');
+    const hearts = document.querySelectorAll('.bg-heart');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        entry.target.style.color = entry.isIntersecting ? '#ff4b5c' : '#ffffff';
+      });
+    }, {
+      root: container,
+      threshold: 0.1
+    });
+    hearts.forEach(heart => observer.observe(heart));
+    document.querySelectorAll('.image-container').forEach(imgContainer => {
+      imgContainer.querySelectorAll('.side-img').forEach(img => {
+        img.addEventListener('mouseenter', () => {
+          imgContainer.classList.add('side-hover');
+        });
+        img.addEventListener('mouseleave', () => {
+          imgContainer.classList.remove('side-hover');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
